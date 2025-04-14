@@ -13,6 +13,7 @@ export const UserCard: React.FC<UserBasicData> = ({ id, name, username }) => {
 
   const handleGoToProfile = () => router.push(`/dashboard/user/${id}`);
 
+  // wiem, że obsłużone w dashboard ale dodatkowy check
   if (!isAdmin && id >= 7 && id <= 10) return null;
 
   return (

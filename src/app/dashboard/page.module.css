@@ -1,4 +1,11 @@
 .dashboardWrapper {
   display: flex;
   flex-direction: column;
+  padding: 20px;
+}
+
+.userCardsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }

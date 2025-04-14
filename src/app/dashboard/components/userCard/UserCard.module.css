@@ -1,0 +1,21 @@
+.cardWrapper {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardTitle {
+  text-align: center;
+  user-select: none;
+}
+
+.cardWrapper:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

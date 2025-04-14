@@ -5,9 +5,14 @@ import { useEffect, useState } from "react";
 import { UsersApiService } from "@/services/usersApiService";
 import { User } from "@/types/userModels";
 import { Loader } from "../components/loader/Loader";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setUsers } from "@/store/slices/usersSlice";
+import UserCard from "./components/userCard/UserCard";
 
 export const Dashboard: React.FC = () => {
-  const [usersList, setUsersList] = useState<User[]>([]);
+  const dispatch = useAppDispatch();
+  const users = useAppSelector((state) => state.users.users);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -15,7 +20,7 @@ export const Dashboard: React.FC = () => {
       try {
         setIsLoading(true);
         const users = await UsersApiService.getUsers();
-        setUsersList(users);
+        dispatch(setUsers(users));
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
@@ -33,13 +38,11 @@ export const Dashboard: React.FC = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <ul>
-          {usersList.map((user) => (
-            <li key={user.username}>
-              <strong>{user.name}</strong> – {user.email}
-            </li>
+        <div className={styles.userCardsWrapper}>
+          {users.map((user) => (
+            <UserCard key={user.id} name={user.name} username={user.username} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

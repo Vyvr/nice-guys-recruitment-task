@@ -1,0 +1,4 @@
+.dashboardWrapper {
+  display: flex;
+  flex-direction: column;
+}

@@ -41,8 +41,14 @@ const UserProfilePage: React.FC = () => {
               {isAdmin && (
                 <ListGroup.Item>
                   <strong>Address: </strong>
-                  {user.address.city} {user.address.street} {user.address.suite}{" "}
-                  {user.address.zipcode}
+                  {user.address ? (
+                    <>
+                      {user.address.city} {user.address.street}{" "}
+                      {user.address.suite} {user.address.zipcode}{" "}
+                    </>
+                  ) : (
+                    "User has no address"
+                  )}
                 </ListGroup.Item>
               )}
             </ListGroup>

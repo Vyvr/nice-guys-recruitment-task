@@ -1,8 +1,8 @@
 export interface UserAddress {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
+  street?: string;
+  suite?: string;
+  city?: string;
+  zipcode?: string;
 }
 
 export interface User {
@@ -10,7 +10,8 @@ export interface User {
   name: string;
   username: string;
   email: string;
-  address: UserAddress;
+  address?: UserAddress;
+  isLocal: boolean;
 }
 
 export type UserBasicData = Pick<User, "id" | "name" | "username">;

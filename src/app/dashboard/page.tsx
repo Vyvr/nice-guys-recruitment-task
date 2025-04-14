@@ -3,7 +3,6 @@
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import { UsersApiService } from "@/services/usersApiService";
-import { User } from "@/types/userModels";
 import { Loader } from "../components/loader/Loader";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUsers } from "@/store/slices/usersSlice";

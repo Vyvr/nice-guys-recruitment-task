@@ -35,6 +35,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
     if (loginSuccess) {
       setError("");
       dispatch(loginAsAdmin());
+      resetFormState();
       handleClose();
     } else {
       setError("Invalid username or password");

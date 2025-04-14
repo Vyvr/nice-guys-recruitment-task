@@ -1,4 +1,4 @@
-import { User } from "@/types/userModels";
+import { User } from "@/types/userModel";
 
 export class UsersApiService {
   private static API_URL = "https://jsonplaceholder.typicode.com";

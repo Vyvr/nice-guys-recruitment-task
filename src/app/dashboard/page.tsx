@@ -40,7 +40,12 @@ export const Dashboard: React.FC = () => {
       ) : (
         <div className={styles.userCardsWrapper}>
           {users.map((user) => (
-            <UserCard key={user.id} name={user.name} username={user.username} />
+            <UserCard
+              key={user.id}
+              id={user.id}
+              name={user.name}
+              username={user.username}
+            />
           ))}
         </div>
       )}

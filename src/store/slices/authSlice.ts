@@ -17,11 +17,14 @@ const authSlice = createSlice({
     setRole: (state, action: PayloadAction<Role>) => {
       state.role = action.payload;
     },
-    resetRole: (state) => {
+    loginAsAdmin: (state) => {
+      state.role = "admin";
+    },
+    logout: (state) => {
       state.role = "user";
     },
   },
 });
 
-export const { setRole, resetRole } = authSlice.actions;
+export const { setRole, loginAsAdmin, logout } = authSlice.actions;
 export default authSlice.reducer;

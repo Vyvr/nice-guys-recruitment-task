@@ -6,4 +6,4 @@ export interface User {
   address: string;
 }
 
-export type UserBasicData = Pick<User, "name" | "username">;
+export type UserBasicData = Pick<User, "id" | "name" | "username">;

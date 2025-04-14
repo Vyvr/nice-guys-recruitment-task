@@ -2,7 +2,7 @@ import styles from "./UserCard.module.css";
 import { UserBasicData } from "@/types/userModels";
 import { Button, Card } from "react-bootstrap";
 
-export const UserCard: React.FC<UserBasicData> = ({ name, username }) => {
+export const UserCard: React.FC<UserBasicData> = ({ id, name, username }) => {
   return (
     <Card className={styles.cardWrapper}>
       <Card.Body className={styles.cardBody}>

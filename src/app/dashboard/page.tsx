@@ -7,7 +7,7 @@ import { Loader } from "../components/loader/Loader";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUsers } from "@/store/slices/usersSlice";
 import UserCard from "./components/userCard/UserCard";
-import { Pagination } from "react-bootstrap";
+import { Form, Pagination } from "react-bootstrap";
 import { selectIsAdmin } from "@/store/slices/authSlice";
 
 export const Dashboard: React.FC = () => {
@@ -17,6 +17,8 @@ export const Dashboard: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [filterText, setFilterText] = useState<string>("");
+
   const usersPerPage = 5;
 
   useEffect(() => {
@@ -41,13 +43,19 @@ export const Dashboard: React.FC = () => {
     fetchUsers();
   }, []);
 
-  // -----------------do paginacji-----------------
+  // -----------------do paginacji i filtrowania-----------------
+  const visibleUsers = usersList.filter((user) => {
+    const matchesRole = isAdmin || user.id < 7 || user.id > 10;
+    const matchesFilter =
+      user.name.toLowerCase().includes(filterText.toLowerCase()) ||
+      user.username.toLowerCase().includes(filterText.toLowerCase()) ||
+      user.email.toLowerCase().includes(filterText.toLowerCase());
+
+    return matchesRole && matchesFilter;
+  });
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-
-  const visibleUsers = usersList.filter((user) =>
-    isAdmin ? true : user.id < 7 || user.id > 10
-  );
 
   const currentUsers = visibleUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(visibleUsers.length / usersPerPage);
@@ -73,6 +81,17 @@ export const Dashboard: React.FC = () => {
   return (
     <div className={styles.dashboardWrapper}>
       <h1>Users:</h1>
+
+      <Form.Control
+        type="text"
+        placeholder="Search by name, username or email"
+        className="mb-4"
+        value={filterText}
+        onChange={(e) => {
+          setFilterText(e.target.value);
+          setCurrentPage(1);
+        }}
+      />
 
       {isLoading ? (
         <Loader />

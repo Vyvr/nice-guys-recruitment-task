@@ -1,7 +1,5 @@
 # Opis zadania
 
-Zadanie rekrutacyjne Nice Guys
-
 Stwórz prostą stronę, która wyświetla dane pobrane z API.
 
 1. Skorzystaj z API https://jsonplaceholder.typicode.com/users do wyświetlenia kafelków użytkowników.

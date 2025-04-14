@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Opis zadania
 
-## Getting Started
+Zadanie rekrutacyjne Nice Guys
 
-First, run the development server:
+Stwórz prostą stronę, która wyświetla dane pobrane z API.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Skorzystaj z API https://jsonplaceholder.typicode.com/users do wyświetlenia kafelków użytkowników.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Stwórz switch służący do zmiany roli użytkownika (imitacja logowania się).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Na stronie głównej wyświetl kafelki użytkowników, pamiętając o RWD.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Po kliknięciu na kafelek strona przenosi na podstronę użytkownika
+   - wyświetl tylko name, username, email i address.
+   - Tylko admin widzi użytkowników od id 7 do id 10.
+   - Tylko admin widzi dane adresowe wszystkich użytkowników.
+5. Stwórz formularz umożliwiający dodanie nowego użytkownika (tylko name, username i email) używając metody POST (przez to, że nie jest to realne API, dodaj tego użytkownika do stanu aplikacji żeby był widoczny na liście).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+Zarządzanie stanem, routing, stylowanie - dowolność.
+Mile widziane korzystanie z paczek.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Opcjonalne:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Dodaj paginację na stronę główną.
+2. Zamień switch do logowania na mini panel do logowania admina (login i hasło hardcoded)
+3. Dodany użytkownik będzie widoczny po odświeżeniu strony.
+4. Możliwość filtrowania po "name"
+5. Możliwość filtrowania po name, username lub emailu. (wyklucza się z 4).

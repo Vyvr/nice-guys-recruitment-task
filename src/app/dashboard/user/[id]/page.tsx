@@ -29,7 +29,7 @@ const UserProfilePage: React.FC = () => {
       <div className={styles.userInfoWrapper}>
         <Card className={styles.userInfoCard}>
           <Card.Header as="h5">{user.name}</Card.Header>
-          <Card.Img variant="top" src={profileImagePath} />
+          <Card.Img src={profileImagePath} />
           <Card.Body>
             <ListGroup>
               <ListGroup.Item>

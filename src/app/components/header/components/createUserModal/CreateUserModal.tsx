@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-import { User, UserAddress } from "@/types/userModel";
+import { User } from "@/types/userModel";
 import { useAppDispatch } from "@/store/hooks";
 import { addUser } from "@/store/slices/usersSlice";
 
@@ -11,28 +11,42 @@ interface CreateUserModalProps {
   handleClose: () => void;
 }
 
+const initialFormData = {
+  name: "",
+  username: "",
+  email: "",
+};
+
+const formFields = [
+  { label: "Name", name: "name", type: "text", placeholder: "Enter name" },
+  {
+    label: "Username",
+    name: "username",
+    type: "text",
+    placeholder: "Enter username",
+  },
+  { label: "Email", name: "email", type: "email", placeholder: "Enter email" },
+];
+
 const CreateUserModal: React.FC<CreateUserModalProps> = ({
   show,
   handleClose,
 }) => {
   const dispatch = useAppDispatch();
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [street, setStreet] = useState("");
-  const [suite, setSuite] = useState("");
-  const [city, setCity] = useState("");
-  const [zipcode, setZipcode] = useState("");
+
+  const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const resetForm = () => {
-    setName("");
-    setUsername("");
-    setEmail("");
-    setStreet("");
-    setSuite("");
-    setCity("");
-    setZipcode("");
+    setFormData(initialFormData);
     setError("");
   };
 
@@ -43,6 +57,8 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const { name, username, email } = formData;
 
     if (!name || !username || !email) {
       setError("Please fill all fields.");
@@ -56,6 +72,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
       email,
       isLocal: true,
     };
+
     dispatch(addUser(newUser));
     resetForm();
     handleClose();
@@ -68,30 +85,21 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-2">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-2">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-2">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
+          {formFields.map(({ label, name, type, placeholder }) => (
+            <Form.Group className="mb-2" key={name}>
+              <Form.Label>{label}</Form.Label>
+              <Form.Control
+                name={name}
+                type={type}
+                value={formData[name as keyof typeof formData]}
+                onChange={handleChange}
+                placeholder={placeholder}
+                isInvalid={
+                  !formData[name as keyof typeof formData] && error !== ""
+                }
+              />
+            </Form.Group>
+          ))}
 
           {error && <Alert variant="danger">{error}</Alert>}
 

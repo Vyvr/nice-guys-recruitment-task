@@ -12,17 +12,57 @@ interface LoginModalProps {
   handleClose: () => void;
 }
 
+const initialFormData = {
+  username: "",
+  password: "",
+};
+
+const loginFormFields = [
+  {
+    label: "Username",
+    name: "username",
+    type: "text",
+    placeholder: "Enter username",
+  },
+  {
+    label: "Password",
+    name: "password",
+    type: "password",
+    placeholder: "Enter password",
+  },
+];
+
 const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
   const dispatch = useAppDispatch();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const resetFormState = () => {
+    setFormData(initialFormData);
+    setError("");
+    setIsLoading(false);
+  };
+
+  const handleCloseModal = () => {
+    resetFormState();
+    handleClose();
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const { username, password } = formData;
 
     if (!username || !password) {
       setError("Please fill whole form");
@@ -44,18 +84,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
     setIsLoading(false);
   };
 
-  const resetFormState = () => {
-    setUsername("");
-    setPassword("");
-    setError("");
-    setIsLoading(false);
-  };
-
-  const handleCloseModal = () => {
-    resetFormState();
-    handleClose();
-  };
-
   return (
     <Modal show={show} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
@@ -63,27 +91,21 @@ const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleLogin}>
-          <Form.Group controlId="formUsername" className="mb-3">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              isInvalid={!username && error !== ""}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formPassword" className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              isInvalid={!password && error !== ""}
-            />
-          </Form.Group>
+          {loginFormFields.map(({ label, name, type, placeholder }) => (
+            <Form.Group className="mb-2" key={name}>
+              <Form.Label>{label}</Form.Label>
+              <Form.Control
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                value={formData[name as keyof typeof formData]}
+                onChange={handleChange}
+                isInvalid={
+                  !formData[name as keyof typeof formData] && error !== ""
+                }
+              />
+            </Form.Group>
+          ))}
 
           {error && (
             <Alert variant="danger" className="mt-2">

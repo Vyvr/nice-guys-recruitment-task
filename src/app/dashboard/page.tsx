@@ -18,6 +18,7 @@ export const Dashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [filterText, setFilterText] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const usersPerPage = 5;
 
@@ -34,7 +35,7 @@ export const Dashboard: React.FC = () => {
         ];
         dispatch(setUsers(mergedUsers));
       } catch (error) {
-        console.error("Error fetching users:", error);
+        setError("Failed to fetch users");
       } finally {
         setIsLoading(false);
       }
@@ -77,6 +78,10 @@ export const Dashboard: React.FC = () => {
     );
   }
   //------------------------------------------------
+
+  if (error !== "") {
+    return <p className="text-center text-danger mt-1">{error}</p>;
+  }
 
   return (
     <div className={styles.dashboardWrapper}>
